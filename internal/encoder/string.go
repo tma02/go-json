@@ -39,11 +39,10 @@ var hex = "0123456789abcdef"
 
 //nolint:govet
 func stringToUint64Slice(s string) []uint64 {
-	return *(*[]uint64)(unsafe.Pointer(&reflect.SliceHeader{
-		Data: ((*reflect.StringHeader)(unsafe.Pointer(&s))).Data,
-		Len:  len(s) / 8,
-		Cap:  len(s) / 8,
-	}))
+	stringHeader := (*reflect.StringHeader)(unsafe.Pointer(&s))
+	ptr := unsafe.Pointer(stringHeader.Data)
+	length := len(s) / 8
+	return unsafe.Slice((*uint64)(ptr), length)
 }
 
 func AppendString(ctx *RuntimeContext, buf []byte, s string) []byte {

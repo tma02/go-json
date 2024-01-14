@@ -9,7 +9,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/goccy/go-json"
+	"github.com/tma02/go-json"
 )
 
 type Animal int
